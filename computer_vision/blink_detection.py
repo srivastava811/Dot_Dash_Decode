@@ -12,3 +12,8 @@ else:
 
 detector=dlib.get_frontal_face_detector()
 predictor=dlib.shape_predictor("shape_predictor_68__face_landmarks.dat")
+
+# initial conditions 
+
+open=0
+closed=0
