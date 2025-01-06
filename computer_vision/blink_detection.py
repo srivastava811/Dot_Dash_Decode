@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import dlib
 from imutils import face_utils
+import time
 
 
 cap=cv2.VideoCapture(0)
@@ -19,8 +20,19 @@ predictor = dlib.shape_predictor("E:/Project1/Dot_Dash_Decode/computer_vision/mo
 
 # initial conditions 
 
-open=0
-closed=0
+counter=0
+pause=0
+morse_code=""
+
+# Threshold initialization
+
+EAR_threshold=0.25
+
+# Frames initialization
+
+EAR_dot=3 #frames for a short blink
+EAR_dash=10 #frames for a long blink
+pause_frames=15 #to detect pause between morse code letters
 
 # calculation of euclidean distance between the points around the eyes
 
@@ -36,7 +48,7 @@ def eye_aspect_ratio(a,b,c,d,e,f):
     ear=horizontal_dist/(2.0*vertical_dist)
     return ear
 
-# checking if eye blinked
+'''# checking if eye blinked
 
 def blink(ratio):
     if (ratio>0.25):
@@ -44,7 +56,7 @@ def blink(ratio):
     if (ratio>0.21 and ratio<0.25):
         return 0
     if (ratio<0.21):
-        return -1
+        return -1'''
     
 status = ""
 color = (255, 255, 255)  # Default color (white)
@@ -74,23 +86,42 @@ while True:
 
         left_blink=eye_aspect_ratio(landmarks[36],landmarks[37],landmarks[38],landmarks[41],landmarks[40],landmarks[39])
         right_blink=eye_aspect_ratio(landmarks[42],landmarks[43],landmarks[44],landmarks[47],landmarks[46],landmarks[45])
-
+        ear=(left_blink+right_blink)/2.0
 
         #Creating MORSE code
-        if(left_blink==1 and right_blink==1):
+
+        if(ear<EAR_threshold):
+            counter+=1
+        else:
+            if EAR_dot<counter<EAR_dash:
+                morse_code+="."
+                print("Detected:Dot")
+            elif counter>EAR_dash:
+                morse_code+="-"
+                print("Detected:Dash")
+            elif pause>=pause_frames:
+                morse_code+="/"
+                print("Detected:pause (new word)")
+
+            # Reset the counter
+            counter=0
+            pause+=1
+
+        '''if(left_blink==1 and right_blink==1):
             open+=1
             close=0
             if(open>6):
                 status="."
                 color=(0,0,255)
-        elif(left_blink>1 and right_blink>1):
+        elif(left_blink==-1 and right_blink==-1):
             open=0
             close+=1
             if(close>6):
                 status="_"
-                color=(0,255,0)
+                color=(0,255,0)'''
 
-        cv2.putText(frame,status,(100,100), cv2.FONT_ITALIC, 1.2, color=3)
+        cv2.putText(frame,f"EAR:{ear:.2f}",(100,100), cv2.FONT_ITALIC, 1.2, (0,0,255),2)
+        cv2.putText(frame,f"Morse:{morse_code}",(50,50),cv2.FONT_HERSHEY_SIMPLEX,1.2,(0,0,255),2)
 
         for n in range(0,68):
             (x,y)=landmarks[n]
