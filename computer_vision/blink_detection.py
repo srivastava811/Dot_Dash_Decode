@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import dlib
 from imutils import face_utils
-import time
+#import time
 
 
 cap=cv2.VideoCapture(0)
@@ -22,6 +22,7 @@ predictor = dlib.shape_predictor("E:/Project1/Dot_Dash_Decode/computer_vision/mo
 
 counter=0
 pause=0
+debounce_counter=0
 morse_code=""
 
 # Threshold initialization
@@ -30,9 +31,10 @@ EAR_threshold=0.25
 
 # Frames initialization
 
-EAR_dot=3 #frames for a short blink
-EAR_dash=10 #frames for a long blink
-pause_frames=15 #to detect pause between morse code letters
+EAR_dot=5 #frames for a short blink
+EAR_dash=15 #frames for a long blink
+pause_frames=60 #to detect pause between morse code letters
+pause_debounce=10 #to ensure normal opening of eyes is not considered a pause.
 
 # calculation of euclidean distance between the points around the eyes
 
@@ -92,6 +94,8 @@ while True:
 
         if(ear<EAR_threshold):
             counter+=1
+            pause=0
+            debounce_counter=0
         else:
             if EAR_dot<counter<EAR_dash:
                 morse_code+="."
@@ -99,14 +103,20 @@ while True:
             elif counter>EAR_dash:
                 morse_code+="-"
                 print("Detected:Dash")
-            elif pause>=pause_frames:
-                morse_code+="/"
-                print("Detected:pause (new word)")
+            
 
             # Reset the counter
             counter=0
             pause+=1
 
+            if pause>=pause_frames and debounce_counter==0:
+                morse_code+="/"
+                print("Detected:pause (new word)")
+                pause=0
+                debounce_counter=pause_debounce
+
+            if debounce_counter > 0:
+                debounce_counter -= 1
         '''if(left_blink==1 and right_blink==1):
             open+=1
             close=0
