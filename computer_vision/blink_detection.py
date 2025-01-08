@@ -31,10 +31,10 @@ EAR_threshold=0.25
 
 # Frames initialization
 
-EAR_dot=5 #frames for a short blink
-EAR_dash=15 #frames for a long blink
-pause_frames=60 #to detect pause between morse code letters
-pause_debounce=10 #to ensure normal opening of eyes is not considered a pause.
+EAR_dot=3 #frames for a short blink
+EAR_dash=7 #frames for a long blink
+pause_frames=15 #to detect pause between morse code letters
+pause_debounce=5 #to ensure normal opening of eyes is not considered a pause.
 
 # calculation of euclidean distance between the points around the eyes
 

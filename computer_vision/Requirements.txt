@@ -1,0 +1,8 @@
+1) Install python : Python (3.13.1)
+2) Install Computer Vision library : pip install opencv-python
+3) Install dlib library : pip install dlib
+4) Install CMake (3.31.3)
+5) Visual Studio Build Tools
+6) Install imutils library
+7) Install shape_predictor_68_face_landmarks from dlib's github repository.
+8) Install WinRAR to extract .dat file .bz2 file
