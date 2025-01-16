@@ -15,7 +15,7 @@ else:
     print("Camera opened")
 
 detector=dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor("D:\MorseCode_Translation\Dot_Dash_Decode\shape_predictor_68_face_landmarks (2).dat")
+predictor = dlib.shape_predictor("E:\Project1\Dot_Dash_Decode\computer_vision\models\shape_predictor_68_face_landmarks.dat")
 
 
 
@@ -32,10 +32,10 @@ EAR_threshold=0.25
 
 # Frames initialization
 
-EAR_dot=7 #frames for a short blink
-EAR_dash=12 #frames for a long blink
-pause_frames=20#to detect pause between morse code letters
-pause_debounce=10 #to ensure normal opening of eyes is not considered a pause.
+EAR_dot=5 #frames for a short blink
+EAR_dash=10 #frames for a long blink
+pause_frames=15#to detect pause between morse code letters
+pause_debounce=5 #to ensure normal opening of eyes is not considered a pause.
 
 # calculation of euclidean distance between the points around the eyes
 
