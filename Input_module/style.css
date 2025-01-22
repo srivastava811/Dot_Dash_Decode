@@ -1,0 +1,106 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Header styles */
+  header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  header .left-options a,
+  header .right-options button {
+    text-decoration: none;
+    color: #333;
+    margin-right: 15px;
+    font-size: 14px;
+  }
+  
+  header .right-options button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Main content styles */
+  .main-content {
+    display: flex; /* Align logo and form side by side */
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Space between logo and form */
+  }
+  
+  /* Logo column styles */
+  .logo-column img {
+    width: 400px; /* Adjust the logo size */
+    height: auto;
+    object-fit: contain; /* Prevent image distortion */
+  }
+  
+  /* Login form container styles */
+  .container {
+    width: 400px;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .links {
+    margin-top: 10px;
+    font-size: 12px;
+  }
+  
+  .links a {
+    text-decoration: none;
+    color: #4CAF50;
+  }
+  
