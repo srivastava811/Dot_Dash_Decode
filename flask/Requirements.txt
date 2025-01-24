@@ -1,0 +1,2 @@
+1) Flask: pip install flask
+2) Socket-io: pip install flask-socketio
