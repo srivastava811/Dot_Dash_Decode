@@ -1,3 +1,4 @@
+# Contains blink detection and translation code
 # contains blink detection code
 import cv2
 import numpy as np
@@ -25,6 +26,8 @@ counter=0
 pause=0
 debounce_counter=0
 morse_code=""
+current_word = ""      #store characters forming a single word
+word_pause_frames = 80 # ajust this for detecting word seperation
 
 # Threshold initialization
 
@@ -34,8 +37,8 @@ EAR_threshold=0.25
 
 EAR_dot=5 #frames for a short blink
 EAR_dash=10 #frames for a long blink
-pause_frames=15#to detect pause between morse code letters
-pause_debounce=5 #to ensure normal opening of eyes is not considered a pause.
+pause_frames=20#to detect pause between morse code letters
+pause_debounce=3#to ensure normal opening of eyes is not considered a pause.
 
 # calculation of euclidean distance between the points around the eyes
 
@@ -111,15 +114,21 @@ while True:
             pause+=1
 
             if pause>=pause_frames and debounce_counter==0:
-                morse_code+="/"
-                print("Detected:pause (new word)")
-                pause=0
-                debounce_counter=pause_debounce
-            # Translate the Morse code once input is considered complete
-            if "/" in morse_code:
-                translated_text = convertMorseToText(morse_code.strip("/"))
-                print("Translated Text:", translated_text)
-                morse_code = ""  # Reset Morse code for next input
+               if morse_code:    #convert character if morse code exist
+                   char=convertMorseToText(morse_code)
+                   current_word+=char
+                   print(f"detected Letter: {char},current_word:{current_word}")
+               morse_code=""
+               debounce_counter=pause_debounce
+            #detect word seperation
+            if pause >= word_pause_frames:
+                print(f"Pause detected between words. Current word: {current_word}")
+                if current_word:
+                    print("Final Word:", current_word)
+                    current_word += " "  # Reset for next word
+                pause = 0
+   
+
             if debounce_counter > 0:
                 debounce_counter -= 1
         '''if(left_blink==1 and right_blink==1):
@@ -149,4 +158,3 @@ while True:
         break
 cap.release()
 cv2.destroyAllWindows()
-

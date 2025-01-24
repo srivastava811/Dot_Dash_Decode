@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Load dlib face detector and shape predictor
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")ṭ
+predictor = dlib.shape_predictor("E:\Project1\Dot_Dash_Decode\computer_vision\models\shape_predictor_68_face_landmarks.dat")
 
 # Initialize variables for blink detection
 EAR_THRESHOLD = 0.25

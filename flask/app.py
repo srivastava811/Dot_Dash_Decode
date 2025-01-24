@@ -6,10 +6,15 @@ import numpy as np
 from translation_module import convertMorseToText
 
 app = Flask(__name__)
+cap=cv2.VideoCapture(0)
 
+if not cap.isOpened():
+    print("Cannot open camera")
+else:
+    print("Camera opened")
 # Load dlib face detector and shape predictor
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor("C:\\project\\shape_predictor_68_face_landmarks.dat")
+predictor = dlib.shape_predictor("E:/Project1/Dot_Dash_Decode/computer_vision/models/shape_predictor_68_face_landmarks.dat")
 
 # Initialize variables for blink detection
 EAR_THRESHOLD = 0.25

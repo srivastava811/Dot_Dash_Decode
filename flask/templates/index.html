@@ -1,0 +1,92 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eye Blink Morse Code Translator</title>
+    <style>
+        #video-container {
+            width: 60%;
+            display: inline-block;
+        }
+
+        #output-container {
+            width: 30%;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        #morse-code {
+            font-size: 2em;
+            color: red;
+        }
+
+        #translated-text {
+            font-size: 1.5em;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div id="video-container">
+        <h2>Video Stream (Eye Blink Detection)</h2>
+        <img src="{{ url_for('video_feed') }}" width="100%" />
+    </div>
+
+    <div id="output-container">
+        <h2>Morse Code Detected</h2>
+        <div id="morse-code">{{ morse_code }}</div>
+        <h2>Translated Text</h2>
+        <div id="translated-text">{{ current_word }}</div>
+    </div>
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eye Blink Morse Code Decoder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 0;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #video {
+            width: 80%;
+            max-width: 640px;
+            margin-bottom: 20px;
+        }
+        #output {
+            font-size: 24px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Eye Blink Morse Code Decoder</h1>
+    <img id="video" src="{{ url_for('video_feed') }}" />
+    <div id="output">
+        <div><strong>Morse Code:</strong> <span id="morse_code"></span></div>
+        <div><strong>Translated Text:</strong> <span id="translated_text"></span></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"></script>
+    <script>
+        const socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        // Listen for updates from the server
+        socket.on('update', function(data) {
+            document.getElementById('morse_code').textContent = data.morse_code;
+            document.getElementById('translated_text').textContent = data.translated_text;
+        });
+    </script>
+</body>
+</html>
