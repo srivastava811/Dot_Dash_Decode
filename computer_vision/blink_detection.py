@@ -27,7 +27,7 @@ pause=0
 debounce_counter=0
 morse_code=""
 current_word = ""      #store characters forming a single word
-word_pause_frames = 80 # ajust this for detecting word seperation
+word_pause_frames = 50 # ajust this for detecting word seperation
 
 # Threshold initialization
 
